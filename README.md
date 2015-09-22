@@ -17,3 +17,23 @@ A haskell library for holidays
 - Christmas Day - Dec 25
 
 * For holidays falling on Saturday, Federal Reserve Banks and Branches will be open the preceding Friday. For holidays falling on Sunday, all Federal Reserve Banks and Branches will be closed the following Monday. Expanded schedule can be found at: Federal Reserve System Holidays
+
+``` sh
+# Update Cabal's list of packages.
+cabal update
+
+# Initialize a sandbox and install the package's dependencies.
+make install
+
+# Configure & build the package.
+make build
+
+# Test package.
+make test
+
+# Run executable.
+make run
+
+# Start REPL.
+make repl
+```
