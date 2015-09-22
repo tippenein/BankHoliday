@@ -17,18 +17,15 @@ main = do
   mapM_ updateFiles ms
   where
     createDirectories m = do
-      createBenchmarkDirectory m
       createLibraryDirectory m
       createTestSuiteDirectory m
 
     writeFiles m = do
-      writeBenchmarkFile m
       writeLibraryFile m
       writeTestSuiteFile m
 
     updateFiles m = do
       updateCabal m
-      updateCriterion m
       updateLibrary m
 
 --
@@ -70,35 +67,6 @@ updateFile p m = do
       then [replace (replace line pragma "") placeholder m, line]
       else [line]
 
--- Benchmark
-
-createBenchmarkDirectory :: String -> IO ()
-createBenchmarkDirectory = createDirectory . benchmarkPath
-
-benchmarkDirectory :: String
-benchmarkDirectory = "benchmark"
-
-benchmarkPath :: String -> FilePath
-benchmarkPath = path benchmarkDirectory benchmarkSuffix
-
-benchmarkTemplate :: String -> String
-benchmarkTemplate m = unlines
-  [ "module " <> m <> "Bench (benchmarks) where"
-  , ""
-  , "import " <> m <> " ()"
-  , ""
-  , "import Criterion"
-  , ""
-  , "benchmarks :: [Benchmark]"
-  , "benchmarks = []"
-  ]
-
-benchmarkSuffix :: String
-benchmarkSuffix = "Bench"
-
-writeBenchmarkFile :: String -> IO ()
-writeBenchmarkFile m = writeFile (benchmarkPath m) (benchmarkTemplate m)
-
 -- Cabal
 
 cabalPath :: FilePath
@@ -107,21 +75,13 @@ cabalPath = "holiday.cabal"
 updateCabal :: String -> IO ()
 updateCabal = updateFile cabalPath
 
--- Criterion
-
-criterionPath :: FilePath
-criterionPath = benchmarkPath ""
-
-updateCriterion :: String -> IO ()
-updateCriterion = updateFile criterionPath
-
 -- Library
 
 createLibraryDirectory :: String -> IO ()
 createLibraryDirectory = createDirectory . libraryPath
 
 libraryDirectory :: String
-libraryDirectory = "library"
+libraryDirectory = "lib"
 
 libraryPath :: String -> FilePath
 libraryPath = path libraryDirectory librarySuffix
@@ -147,7 +107,7 @@ createTestSuiteDirectory :: String -> IO ()
 createTestSuiteDirectory = createDirectory . testSuitePath
 
 testSuiteDirectory :: String
-testSuiteDirectory = "test-suite"
+testSuiteDirectory = "test"
 
 testSuitePath :: String -> FilePath
 testSuitePath = path testSuiteDirectory testSuiteSuffix
