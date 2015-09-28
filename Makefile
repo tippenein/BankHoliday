@@ -15,4 +15,4 @@ run:
 	stack exec holiday
 
 test:
-	stack test
+	stack build --test
