@@ -4,13 +4,14 @@ cabal-version: >=1.10
 build-type: Simple
 license: MIT
 license-file: LICENSE.md
--- source-repository: git://github.com/tippenein/holiday
+homepage: https://github.com/tippenein/BankHoliday
+bug-reports: https://github.com/tippenein/BankHoliday/issues
 copyright: 2015 brady.ouren <brady.ouren@gmail.com>
 maintainer: brady.ouren <brady.ouren@gmail.com>
-synopsis: TODO
+synopsis: A library for determining US bank holidays
 description:
-    TODO
-category: TODO
+    A library for determining US bank holidays
+category: Time
 author: brady.ouren <brady.ouren@gmail.com>
 tested-with: GHC ==7.8 GHC ==7.6
 extra-source-files:
@@ -39,3 +40,7 @@ test-suite tests
   other-modules: Spec
     , Data.Time.Calendar.BankHoliday.UnitedStatesSpec
   ghc-options: -Wall -threaded -rtsopts
+
+source-repository head
+  type:     git
+  location: git://github.com/tippenein/BankHoliday.git
