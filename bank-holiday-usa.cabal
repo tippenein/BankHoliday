@@ -17,25 +17,25 @@ extra-source-files:
   README.md
 
 library
-  exposed-modules: Data.Calendar.BankHoliday.UnitedStates
+  exposed-modules: Data.Time.Calendar.BankHoliday.UnitedStates
   build-depends:
       base ==4.*
     , time
   default-language: Haskell2010
-  hs-source-dirs: src
   ghc-options: -Wall
 
 test-suite tests
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   build-depends:
-      base -any,
-      bank-holiday-usa -any,
-      hspec ==2.*,
-      HUnit -any,
-      QuickCheck -any
+      base -any
+    , bank-holiday-usa -any
+    , time
+    , hspec ==2.*
+    , HUnit -any
+    , QuickCheck -any
   default-language: Haskell2010
   hs-source-dirs: test
   other-modules: Spec
     , Data.Time.Calendar.BankHoliday.UnitedStatesSpec
-  ghc-options: -fhpc -Wall -Werror
+  ghc-options: -Wall -threaded -rtsopts

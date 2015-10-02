@@ -23,16 +23,15 @@ module Data.Time.Calendar.BankHoliday.UnitedStates
   , bankHolidays
   ) where
 
-import qualified Data.Set as Set
 import Data.Time (Day, fromGregorian, toGregorian)
-import Data.Time.Calendar (addDays)
+import Data.Time.Calendar (addDays, toModifiedJulianDay)
 import Data.Time.Calendar.Easter (gregorianEaster)
 
 -- perhaps should newtype a Year data type?
 bankHolidays :: Integer -> [Day]
 bankHolidays yy = standardHolidays
   where
-    standardHolidays = [ firstMondayIn may ]
+    standardHolidays = [ ]-- firstMondayIn may ]
 
 firstMondayIn mm = addDays (negate $ wd mm 02) (mm 07)
 wd mm dd = toModifiedJulianDay (mm dd) `mod` 7
@@ -44,5 +43,5 @@ isBankHoliday d = False
     easterSunday = gregorianEaster yy
 
 weeksBefore :: Integer -> Day -> Day
-weeksBefore = addDays (-7)
+weeksBefore i = addDays ((-7) * i)
 

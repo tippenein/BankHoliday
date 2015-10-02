@@ -15,6 +15,7 @@ spec :: Spec
 spec = do
   describe "bankHolidays" $ do
     it "is always a weekday" $ property
-      $ \yr -> not $ any (\d -> toModifiedJulianDay d `mod` 7 `elem` [3,4])
-        $ bankHolidays yr
+      $ \yr -> not $ any (\d -> isWeekday d) (bankHolidays yr)
+        where
+          isWeekday d = toModifiedJulianDay d `mod` 7 `elem` [3,4]
 
