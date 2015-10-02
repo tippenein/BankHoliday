@@ -36,3 +36,6 @@ make test
 # Start REPL.
 make repl
 ```
+
+Inspired by [this](https://hackage.haskell.org/package/bank-holidays-england)
+
