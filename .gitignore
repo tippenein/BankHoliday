@@ -1,4 +1,5 @@
 dist
+*.tix
 cabal-dev
 *.o
 *.hi
