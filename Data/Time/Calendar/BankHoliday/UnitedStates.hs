@@ -40,17 +40,19 @@ bankHolidays year = standardHolidays
       , weekBefore (firstMondayIn jun)     -- memorial day
       , firstMondayIn sep                  -- labor day
       , weekAfter (firstMondayIn oct)      -- columbusDay
+      , thanksgiving
       ] ++ mapMaybe id [
         weekendHolidayFrom (jan 1)  -- newYearsDay
       , weekendHolidayFrom (jan 20) -- inaugurationDay
       , weekendHolidayFrom (jul 4)  -- independenceDay
       , weekendHolidayFrom (nov 11) -- veteransDay
-      , weekendHolidayFrom thanksgiving
       , weekendHolidayFrom (dec 25) -- christmas
       ]
 
     thanksgiving = 3 `weeksAfter` (addDays 3 (firstMondayIn nov)) -- 4th thursday in nov
-    firstMondayIn month = addDays (negate $ weekIndex (month 02)) (month 07)
+
+firstMondayIn :: Num a => (a -> Day) -> Day
+firstMondayIn month = addDays (negate $ weekIndex (month 02)) (month 07)
 
 weekIndex day = toModifiedJulianDay day `mod` 7
 
