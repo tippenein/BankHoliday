@@ -14,9 +14,7 @@ spec = do
     it "is always a weekday" $ property
       $ \yr -> all (\d -> isWeekday d) (bankHolidays yr)
 
-    it "falling on a sunday are delegated to following monday" $ property
-      $ \yr -> 
+    -- it "falling on a sunday are delegated to following monday" $ do
 
-    it "falling on a saturday are open the preceding friday" $ property
-      $ \yr -> 
+    -- it "falling on a saturday are open the preceding friday" $ property
 

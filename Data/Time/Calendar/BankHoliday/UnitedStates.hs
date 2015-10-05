@@ -25,6 +25,7 @@ module Data.Time.Calendar.BankHoliday.UnitedStates
   , isWeekend
   ) where
 
+import Data.Maybe
 import Data.Time (Day, fromGregorian, toGregorian)
 import Data.Time.Calendar (addDays, toModifiedJulianDay)
 
@@ -32,38 +33,39 @@ import Data.Time.Calendar (addDays, toModifiedJulianDay)
 bankHolidays :: Integer -> [Day]
 bankHolidays year = standardHolidays
   where
-    [jan, feb, may, jun, sep, dec] = map (fromGregorian year) [1,2,5,6,9,12]
+    [jan, feb, may, jun, jul, sep, oct, nov, dec] = map (fromGregorian year) [1,2,5,6,7,9,10,11,12]
     standardHolidays = [
-        newYearsDay
-      , mlkDay
-      , inaugurationDay
-      , presidentsDay
-      , memorialDay
-      , christmas
+        2 `weeksBefore` firstMondayIn feb  -- mlk Day
+      , 2 `weeksAfter` firstMondayIn feb   -- presidents day
+      , weekBefore (firstMondayIn jun)     -- memorial day
+      , firstMondayIn sep                  -- labor day
+      , weekAfter (firstMondayIn oct)      -- columbusDay
+      ] ++ mapMaybe id [
+        weekendHolidayFrom (jan 1)  -- newYearsDay
+      , weekendHolidayFrom (jan 20) -- inaugurationDay
+      , weekendHolidayFrom (jul 4)  -- independenceDay
+      , weekendHolidayFrom (nov 11) -- veteransDay
+      , weekendHolidayFrom thanksgiving
+      , weekendHolidayFrom (dec 25) -- christmas
       ]
-    newYearsDay = case wd jan 1 of
-      3 -> jan 3 -- Saturday
-      4 -> jan 2 -- Sunday
-      _ -> jan 1
-    inaugurationDay = case wd jan 20 of
-      3 -> jan 22  -- saturday
-      4 -> jan 21  -- sunday
-      _ -> jan 20
-    mlkDay = 2 `weeksBefore` firstMondayIn feb
-    presidentsDay = 2 `weeksAfter` firstMondayIn feb
-    memorialDay = weekBefore (firstMondayIn jun)
-    christmas = case wd dec 25 of
-      3 -> dec 27  -- saturday
-      4 -> dec 26  -- sunday
-      _ -> dec 25
 
-    firstMondayIn mm = addDays (negate $ wd mm 02) (mm 07)
-    wd mm dd = toModifiedJulianDay (mm dd) `mod` 7
+    thanksgiving = 3 `weeksAfter` (addDays 3 (firstMondayIn nov)) -- 4th thursday in nov
+    firstMondayIn month = addDays (negate $ weekIndex (month 02)) (month 07)
+
+weekIndex day = toModifiedJulianDay day `mod` 7
+
+weekendHolidayFrom :: Day -> Maybe Day
+weekendHolidayFrom d = case weekIndex d of
+  3 -> Nothing            -- saturday
+  4 -> Just (addDays 1 d) -- sunday
+  _ -> Just d
 
 weeksBefore n = addDays (n * (-7))
+
 weekBefore = weeksBefore 1
 
 weeksAfter n = addDays (n * 7)
+
 weekAfter = weeksAfter 1
 
 isBankHoliday :: Day -> Bool
