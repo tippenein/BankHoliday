@@ -19,22 +19,19 @@ A haskell library for holidays
 
 > For holidays falling on Saturday, Federal Reserve Banks and Branches will be
   open the preceding Friday. For holidays falling on Sunday, all Federal
-  Reserve Banks and Branches will be closed the following Monday. Expanded
-  schedule can be found at: Federal Reserve System Holidays
+  Reserve Banks and Branches will be closed the following Monday.
 
 ``` sh
 
 # Initialize a sandbox and install the package's dependencies.
-make install
+stack install
 
 # Configure & build the package.
-make build
+stack build
 
 # Test package.
-make test
+stack test
 
-# Start REPL.
-make repl
 ```
 
 Inspired by [this](https://hackage.haskell.org/package/bank-holidays-england)
