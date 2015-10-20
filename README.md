@@ -1,6 +1,8 @@
 Holiday
 ---
 
+[![Build Status](https://secure.travis-ci.org/tippenein/BankHoliday.png)](http://travis-ci.org/tippenein/BankHoliday)
+
 A haskell library for holidays
 
 ----
