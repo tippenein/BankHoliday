@@ -31,9 +31,9 @@ import Data.Time.Calendar (addDays, toModifiedJulianDay)
 
 {- bank holidays for a given year -}
 bankHolidays :: Integer -> [Day]
-bankHolidays year = standardHolidays
+bankHolidays year = filterHistoric standardHolidays
   where
-    [jan, feb, may, jun, jul, sep, oct, nov, dec] = map (fromGregorian year) [1,2,5,6,7,9,10,11,12]
+    [jan, feb, jun, jul, sep, oct, nov, dec] = map (fromGregorian year) [1,2,6,7,9,10,11,12]
     standardHolidays = [
         2 `weeksBefore` firstMondayIn feb  -- mlk Day
       , 2 `weeksAfter` firstMondayIn feb   -- presidents day
@@ -50,6 +50,8 @@ bankHolidays year = standardHolidays
       ]
 
     thanksgiving = 3 `weeksAfter` (addDays 3 (firstMondayIn nov)) -- 4th thursday in nov
+
+filterHistoric = filter (\d -> d > minimumDay)
 
 firstMondayIn :: Num a => (a -> Day) -> Day
 firstMondayIn month = addDays (negate $ weekIndex (month 02)) (month 07)
@@ -81,3 +83,5 @@ isWeekend d = toModifiedJulianDay d `mod` 7 `elem` [3,4]
 isWeekday :: Day -> Bool
 isWeekday = not . isWeekend
 
+minimumDay :: Day
+minimumDay = fromGregorian 1933 3 9
