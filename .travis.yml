@@ -23,6 +23,3 @@ install:
 
 script:
   - stack +RTS -N2 -RTS build --test
-
-# script:
-#   - stack --no-terminal --skip-ghc-check test
