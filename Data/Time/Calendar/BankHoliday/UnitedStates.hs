@@ -1,21 +1,8 @@
-{-
-- New Year's Day - January 1
-- Inauguration Day - January 20
-- Martin Luther King, Jr. Day - Third Monday in January
-- George Washington's Birthday - Third Monday in February
-- Memorial Day - Last Monday in May
-- Independence Day - July 4
-- Labor Day - First Monday in September
-- Columbus Day - Second Monday in October
-- Veterans Day - November 11
-- Thanksgiving Day - 4th Thursday in November
-- Christmas Day - December 25
-
-- For holidays falling on Saturday, Federal Reserve Banks and Branches will be
-  open the preceding Friday. For holidays falling on Sunday, all Federal
-  Reserve Banks and Branches will be closed the following Monday.
-
--}
+------------------------------------------------------------------------------
+-- Module      : Data.Time.Calendar.BankHoliday.UnitedStates
+-- Copyright   : (c) Brady Ouren
+-- Maintainer  : brady.ouren@gmail.com
+------------------------------------------------------------------------------
 
 module Data.Time.Calendar.BankHoliday.UnitedStates
   (
@@ -29,18 +16,19 @@ import Data.Maybe
 import Data.Time (Day, fromGregorian, toGregorian)
 import Data.Time.Calendar (addDays, toModifiedJulianDay)
 
-{- bank holidays for a given year -}
+{- | bank holidays for a given year -}
 bankHolidays :: Integer -> [Day]
 bankHolidays year = filterHistoric standardHolidays
   where
-    [jan, feb, jun, jul, sep, oct, nov, dec] = map (fromGregorian year) [1,2,6,7,9,10,11,12]
+    [jan, feb, jun, jul, sep, oct, nov, dec] = monthsMap
+    monthsMap = map (fromGregorian year) [1,2,6,7,9,10,11,12]
     standardHolidays = [
         2 `weeksBefore` firstMondayIn feb  -- mlk Day
       , 2 `weeksAfter` firstMondayIn feb   -- presidents day
       , weekBefore (firstMondayIn jun)     -- memorial day
       , firstMondayIn sep                  -- labor day
       , weekAfter (firstMondayIn oct)      -- columbusDay
-      , thanksgiving
+      , 3 `weeksAfter` firstThursdayIn nov -- thanksgiving
       ] ++ catMaybes [
         weekendHolidayFrom (jan 1)  -- newYearsDay
       , weekendHolidayFrom (jan 20) -- inaugurationDay
@@ -49,15 +37,16 @@ bankHolidays year = filterHistoric standardHolidays
       , weekendHolidayFrom (dec 25) -- christmas
       ]
 
-    thanksgiving = 3 `weeksAfter` firstThursdayIn nov -- 4th thursday in nov
+{- | whether the given day is a bank holiday -}
+isBankHoliday :: Day -> Bool
+isBankHoliday d = d `elem` (bankHolidays year)
+  where
+    (year,_,_) = toGregorian d
 
-filterHistoric = filter (\d -> d > minimumDay)
-
-firstMondayIn month = addDays (negate $ weekIndex (month 02)) (month 07)
-
-firstThursdayIn month = addDays 3 (firstMondayIn month)
-
-weekIndex day = toModifiedJulianDay day `mod` 7
+-- | day federal bank holidays were announced in the United States
+-- | March 9th 1933
+filterHistoric = filter (\d -> d > marchNinth1933)
+  where marchNinth1933 = fromGregorian 1933 3 9
 
 weekendHolidayFrom :: Day -> Maybe Day
 weekendHolidayFrom d = case weekIndex d of
@@ -65,24 +54,17 @@ weekendHolidayFrom d = case weekIndex d of
   4 -> Just (addDays 1 d) -- sunday
   _ -> Just d
 
-weeksBefore n = addDays (n * (-7))
-
-weekBefore = weeksBefore 1
-
-weeksAfter n = addDays (n * 7)
-
-weekAfter = weeksAfter 1
-
--- day federal bank holidays were announced in the United States
-minimumDay = fromGregorian 1933 3 9
-
-isBankHoliday :: Day -> Bool
-isBankHoliday d = d `elem` (bankHolidays year)
-  where
-    (year,_,_) = toGregorian d
-
 isWeekend :: Day -> Bool
 isWeekend d = toModifiedJulianDay d `mod` 7 `elem` [3,4]
 
 isWeekday :: Day -> Bool
 isWeekday = not . isWeekend
+
+-- | relative day helper functions
+weekIndex day = toModifiedJulianDay day `mod` 7
+firstMondayIn month = addDays (negate $ weekIndex (month 02)) (month 07)
+firstThursdayIn month = addDays 3 (firstMondayIn month)
+weeksBefore n = addDays (n * (-7))
+weekBefore = weeksBefore 1
+weeksAfter n = addDays (n * 7)
+weekAfter = weeksAfter 1
