@@ -41,7 +41,7 @@ bankHolidays year = filterHistoric standardHolidays
       , firstMondayIn sep                  -- labor day
       , weekAfter (firstMondayIn oct)      -- columbusDay
       , thanksgiving
-      ] ++ mapMaybe id [
+      ] ++ catMaybes [
         weekendHolidayFrom (jan 1)  -- newYearsDay
       , weekendHolidayFrom (jan 20) -- inaugurationDay
       , weekendHolidayFrom (jul 4)  -- independenceDay
@@ -49,12 +49,13 @@ bankHolidays year = filterHistoric standardHolidays
       , weekendHolidayFrom (dec 25) -- christmas
       ]
 
-    thanksgiving = 3 `weeksAfter` (addDays 3 (firstMondayIn nov)) -- 4th thursday in nov
+    thanksgiving = 3 `weeksAfter` firstThursdayIn nov -- 4th thursday in nov
 
 filterHistoric = filter (\d -> d > minimumDay)
 
-firstMondayIn :: Num a => (a -> Day) -> Day
 firstMondayIn month = addDays (negate $ weekIndex (month 02)) (month 07)
+
+firstThursdayIn month = addDays 3 (firstMondayIn month)
 
 weekIndex day = toModifiedJulianDay day `mod` 7
 
@@ -72,6 +73,9 @@ weeksAfter n = addDays (n * 7)
 
 weekAfter = weeksAfter 1
 
+-- day federal bank holidays were announced in the United States
+minimumDay = fromGregorian 1933 3 9
+
 isBankHoliday :: Day -> Bool
 isBankHoliday d = d `elem` (bankHolidays year)
   where
@@ -82,6 +86,3 @@ isWeekend d = toModifiedJulianDay d `mod` 7 `elem` [3,4]
 
 isWeekday :: Day -> Bool
 isWeekday = not . isWeekend
-
-minimumDay :: Day
-minimumDay = fromGregorian 1933 3 9
