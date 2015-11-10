@@ -1,6 +1,5 @@
 ------------------------------------------------------------------------------
 -- Module      : Data.Time.Calendar.BankHoliday.UnitedStates
--- Copyright   : (c) Brady Ouren
 -- Maintainer  : brady.ouren@gmail.com
 ------------------------------------------------------------------------------
 
@@ -8,13 +7,12 @@ module Data.Time.Calendar.BankHoliday.UnitedStates
   (
     isBankHoliday
   , bankHolidays
-  , isWeekday
-  , isWeekend
   ) where
 
 import Data.Maybe
 import Data.Time (Day, fromGregorian, toGregorian)
 import Data.Time.Calendar (addDays, toModifiedJulianDay)
+import Data.Time.Calendar.BankHoliday (isWeekday, isWeekend)
 
 {- | bank holidays for a given year -}
 bankHolidays :: Integer -> [Day]
@@ -53,12 +51,6 @@ weekendHolidayFrom d = case weekIndex d of
   3 -> Nothing            -- saturday
   4 -> Just (addDays 1 d) -- sunday
   _ -> Just d
-
-isWeekend :: Day -> Bool
-isWeekend d = toModifiedJulianDay d `mod` 7 `elem` [3,4]
-
-isWeekday :: Day -> Bool
-isWeekday = not . isWeekend
 
 -- | relative day helper functions
 weekIndex day = toModifiedJulianDay day `mod` 7

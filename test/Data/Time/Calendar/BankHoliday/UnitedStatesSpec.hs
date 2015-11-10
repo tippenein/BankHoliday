@@ -6,6 +6,7 @@ import Data.Time
 import Test.Hspec
 import Test.QuickCheck
 
+import Data.Time.Calendar.BankHoliday (isWeekday)
 import Data.Time.Calendar.BankHoliday.UnitedStates
 
 spec :: Spec
@@ -28,9 +29,3 @@ spec = do
       let christmas = fromGregorian 2015 12 25
       isBankHoliday christmas `shouldBe` True
 
-  describe "isWeekday" $ do
-    it "is accurate" $ do
-      all (\d -> isWeekday d) [
-          (fromGregorian 2015 11 4)
-        , (fromGregorian 1999 5 3)
-        ]

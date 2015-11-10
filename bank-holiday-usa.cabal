@@ -1,5 +1,5 @@
 name: bank-holiday-usa
-version: 0.0.0
+version: 0.0.1
 cabal-version: >=1.10
 build-type: Simple
 license: MIT
@@ -18,7 +18,9 @@ extra-source-files:
   README.md
 
 library
-  exposed-modules: Data.Time.Calendar.BankHoliday.UnitedStates
+  exposed-modules:
+      Data.Time.Calendar.BankHoliday
+    , Data.Time.Calendar.BankHoliday.UnitedStates
   build-depends:
       base ==4.*
     , time
