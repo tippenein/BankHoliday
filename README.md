@@ -5,6 +5,8 @@ Holiday
 
 A haskell library for holidays
 
+[bank-holiday-usa on hackage](https://hackage.haskell.org/package/bank-holiday-usa)
+
 ----
 
 - New Year's Day - January 1
@@ -24,9 +26,6 @@ A haskell library for holidays
   Reserve Banks and Branches will be closed the following Monday.
 
 ``` sh
-
-# Initialize a sandbox and install the package's dependencies.
-stack install
 
 # Configure & build the package.
 stack build
