@@ -27,5 +27,7 @@ spec = do
   describe "isBankHoliday" $ do
     it "returns true for the days we expect" $ do
       let christmas = fromGregorian 2015 12 25
-      isBankHoliday christmas `shouldBe` True
+      let newYears = fromGregorian 2014 1 1
+      let fourth = fromGregorian 2014 7 4
+      all isBankHoliday [christmas, newYears, fourth]
 
