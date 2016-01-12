@@ -7,12 +7,14 @@ module Data.Time.Calendar.BankHoliday.UnitedStates
   (
     isBankHoliday
   , bankHolidays
+  , holidaysBetween
+  , holidaysBetweenYears
   ) where
 
 import Data.Maybe
 import Data.Time (Day, fromGregorian, toGregorian)
 import Data.Time.Calendar (addDays, toModifiedJulianDay)
-import Data.Time.Calendar.BankHoliday (isWeekday, isWeekend)
+import Data.Time.Calendar.BankHoliday (isWeekday, isWeekend, yearFromDay)
 
 {- | bank holidays for a given year -}
 bankHolidays :: Integer -> [Day]
@@ -37,14 +39,25 @@ bankHolidays year = filterHistoric standardHolidays
 
 {- | whether the given day is a bank holiday -}
 isBankHoliday :: Day -> Bool
-isBankHoliday d = d `elem` (bankHolidays year)
-  where
-    (year,_,_) = toGregorian d
+isBankHoliday d = d `elem` bankHolidays (yearFromDay d)
 
 -- | day federal bank holidays were announced in the United States
 -- | March 9th 1933
+filterHistoric :: [Day] -> [Day]
 filterHistoric = filter (\d -> d > marchNinth1933)
   where marchNinth1933 = fromGregorian 1933 3 9
+
+-- | find holidays falling between 2 years of time
+holidaysBetweenYears :: Integer -> Integer -> [Day]
+holidaysBetweenYears startYear endYear =
+  foldl (++) [] (map bankHolidays [startYear..endYear])
+
+-- | find holidays falling between 2 specific days
+holidaysBetween :: Day -> Day -> [Day]
+holidaysBetween start end =
+  filter (\a -> a >= start && a <= end) fullRange
+  where
+    fullRange = holidaysBetweenYears (yearFromDay start) (yearFromDay end)
 
 weekendHolidayFrom :: Day -> Maybe Day
 weekendHolidayFrom d = case weekIndex d of

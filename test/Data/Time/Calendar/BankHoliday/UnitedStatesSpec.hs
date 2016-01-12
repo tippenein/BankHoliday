@@ -2,11 +2,12 @@
 
 module Data.Time.Calendar.BankHoliday.UnitedStatesSpec (spec) where
 
+import Data.List (nub)
 import Data.Time
 import Test.Hspec
 import Test.QuickCheck
 
-import Data.Time.Calendar.BankHoliday (isWeekday)
+import Data.Time.Calendar.BankHoliday (isWeekday, yearFromDay)
 import Data.Time.Calendar.BankHoliday.UnitedStates
 
 spec :: Spec
@@ -30,4 +31,33 @@ spec = do
       let newYears = fromGregorian 2014 1 1
       let fourth = fromGregorian 2014 7 4
       all isBankHoliday [christmas, newYears, fourth]
+
+  describe "holidaysBetweenYears" $ do
+    it "does not include dates outside of range" $ do
+      let tooEarly = bankHolidays 1999
+      let tooLate = bankHolidays 2017
+      let justRight = holidaysBetweenYears 2000 2016
+      justRight `shouldNotContain` tooEarly
+      justRight `shouldNotContain` tooLate
+
+    it "keeps them in order" $ do
+      let oneYearRange = holidaysBetweenYears 2000 2001
+      let f = yearFromDay $ head $ oneYearRange
+      let l = yearFromDay $ head $ reverse $ oneYearRange
+      f `shouldBe` 2000
+      l `shouldBe` 2001
+
+    it "does not duplicate if given the same year" $ do
+      let sameYearRange = holidaysBetweenYears 2000 2000
+      nub sameYearRange `shouldBe` sameYearRange
+
+
+  describe "holidaysBetween" $ do
+    it "does not include dates outside of range" $ do
+      let (s, e) = (fromGregorian 2014 1 2, fromGregorian 2014 7 4)
+      let theRange = holidaysBetween s e
+      theRange `shouldNotContain` [fromGregorian 2014 1 1]
+      theRange `shouldNotContain` [fromGregorian 2014 7 5]
+      theRange `shouldContain` [e]
+      theRange `shouldContain` [fromGregorian 2014 1 20]
 
