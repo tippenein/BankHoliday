@@ -2,7 +2,7 @@
 
 module Data.Time.Calendar.BankHoliday.UnitedStatesSpec (spec) where
 
-import Data.List (nub)
+import Data.List (nub, sort)
 import Data.Time
 import Test.Hspec
 import Test.QuickCheck
@@ -15,6 +15,20 @@ spec = do
   describe "bankHolidays" $ do
     it "are always a weekday" $ property
       $ \yr -> all (\d -> isWeekday d) (bankHolidays yr)
+
+    it "gets all dates in 2017 correct" $ do
+      let year = fromGregorian 2017
+      let dates = [ year 1 2
+                  , year 1 16
+                  , year 2 20
+                  , year 5 29
+                  , year 7 4
+                  , year 9 4
+                  , year 10 9
+                  , year 11 23
+                  , year 12 25
+                  ]
+      (sort (bankHolidays 2017)) `shouldBe` dates
 
     it "do not include dates before the inception of bank holidays" $ do
       (bankHolidays 1932) `shouldBe` []

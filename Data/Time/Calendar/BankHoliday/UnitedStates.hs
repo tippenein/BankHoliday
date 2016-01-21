@@ -23,15 +23,14 @@ bankHolidays year = filterHistoric standardHolidays
     [jan, feb, jun, jul, sep, oct, nov, dec] = monthsMap
     monthsMap = map (fromGregorian year) [1,2,6,7,9,10,11,12]
     standardHolidays = [
-        2 `weeksBefore` firstMondayIn feb  -- mlk Day
+        2 `weeksAfter` firstMondayIn jan -- mlk Day
       , 2 `weeksAfter` firstMondayIn feb   -- presidents day
       , weekBefore (firstMondayIn jun)     -- memorial day
       , firstMondayIn sep                  -- labor day
       , weekAfter (firstMondayIn oct)      -- columbusDay
-      , 3 `weeksAfter` firstThursdayIn nov -- thanksgiving
+      , 2 `weeksAfter` firstThursdayIn nov -- thanksgiving
       ] ++ catMaybes [
         weekendHolidayFrom (jan 1)  -- newYearsDay
-      , weekendHolidayFrom (jan 20) -- inaugurationDay
       , weekendHolidayFrom (jul 4)  -- independenceDay
       , weekendHolidayFrom (nov 11) -- veteransDay
       , weekendHolidayFrom (dec 25) -- christmas
