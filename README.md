@@ -2,6 +2,7 @@ Holiday
 ---
 
 [![Build Status](https://secure.travis-ci.org/tippenein/BankHoliday.png)](http://travis-ci.org/tippenein/BankHoliday)
+[![Hackage](https://img.shields.io/hackage/v/bank-holiday-usa.svg)](http://hackage.haskell.org/package/bank-holiday-usa)
 
 A haskell library for holidays
 
