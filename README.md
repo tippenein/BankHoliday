@@ -1,4 +1,4 @@
-Holiday
+Bank Holiday USA
 ---
 
 [![Build Status](https://secure.travis-ci.org/tippenein/BankHoliday.png)](http://travis-ci.org/tippenein/BankHoliday)
@@ -11,9 +11,8 @@ A haskell library for holidays
 ----
 
 - New Year's Day - January 1
-- Inauguration Day - January 20
 - Martin Luther King, Jr. Day - Third Monday in January
-- George Washington's Birthday - Third Monday in February
+- George Washington's Birthday (President's day) - Third Monday in February
 - Memorial Day - Last Monday in May
 - Independence Day - July 4
 - Labor Day - First Monday in September

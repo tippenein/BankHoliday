@@ -12,9 +12,9 @@ module Data.Time.Calendar.BankHoliday.UnitedStates
   ) where
 
 import Data.Maybe
-import Data.Time (Day, fromGregorian, toGregorian)
+import Data.Time (Day, fromGregorian)
 import Data.Time.Calendar (addDays, toModifiedJulianDay)
-import Data.Time.Calendar.BankHoliday (isWeekday, isWeekend, yearFromDay)
+import Data.Time.Calendar.BankHoliday (yearFromDay)
 
 {- | bank holidays for a given year -}
 bankHolidays :: Integer -> [Day]
@@ -43,13 +43,13 @@ isBankHoliday d = d `elem` bankHolidays (yearFromDay d)
 -- | day federal bank holidays were announced in the United States
 -- | March 9th 1933
 filterHistoric :: [Day] -> [Day]
-filterHistoric = filter (\d -> d > marchNinth1933)
+filterHistoric = filter (> marchNinth1933)
   where marchNinth1933 = fromGregorian 1933 3 9
 
 -- | find holidays falling between 2 years of time
 holidaysBetweenYears :: Integer -> Integer -> [Day]
 holidaysBetweenYears startYear endYear =
-  foldl (++) [] (map bankHolidays [startYear..endYear])
+  concatMap bankHolidays [startYear..endYear]
 
 -- | find holidays falling between 2 specific days
 holidaysBetween :: Day -> Day -> [Day]
