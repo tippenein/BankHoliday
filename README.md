@@ -10,6 +10,38 @@ A haskell library for holidays
 
 ----
 
+## usage
+
+```haskell
+-- list the 2016 bank holidays
+bankHolidays 2016
+[2016-01-18,2016-02-15,2016-05-30,2016-09-05,2016-10-10,2016-11-24,2016-01-01,2016-07-04,2016-11-11,2016-12-26]
+
+-- isBankHoliday :: Day -> Bool
+filter isBankHoliday [fromGregorian 2012 2 2, fromGregorian 2016 1 1]
+[2016-01-01]
+
+-- United States bank holidays started in 1933 on march 9th
+holidaysBetweenYears 1900 1933
+[1933-05-29,1933-09-04,1933-10-09,1933-11-23,1933-07-04,1933-12-25]
+
+holidaysBetweenYears :: Day -> Day -> [Day]
+```
+
+``` sh
+
+# Configure & build the package.
+stack build
+
+# Test package.
+stack test
+
+```
+
+## Holidays
+
+The holiday's covered:
+
 - New Year's Day - January 1
 - Martin Luther King, Jr. Day - Third Monday in January
 - George Washington's Birthday (President's day) - Third Monday in February
@@ -25,15 +57,5 @@ A haskell library for holidays
   open the preceding Friday. For holidays falling on Sunday, all Federal
   Reserve Banks and Branches will be closed the following Monday.
 
-``` sh
-
-# Configure & build the package.
-stack build
-
-# Test package.
-stack test
-
-```
-
-Inspired by [this](https://hackage.haskell.org/package/bank-holidays-england)
+Inspired by [this](https://hackage.haskell.org/package/bank-holidays-england) library
 
