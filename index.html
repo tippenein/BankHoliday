@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Bankholiday by tippenein</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Bankholiday</h1>
+        <p>A haskell library for holidays</p>
+
+        <p class="view"><a href="https://github.com/tippenein/BankHoliday">View the Project on GitHub <small>tippenein/BankHoliday</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/tippenein/BankHoliday/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/tippenein/BankHoliday/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/tippenein/BankHoliday">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h2>
+<a id="bank-holiday-usa" class="anchor" href="#bank-holiday-usa" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Bank Holiday USA</h2>
+
+<p><a href="http://travis-ci.org/tippenein/BankHoliday"><img src="https://secure.travis-ci.org/tippenein/BankHoliday.png" alt="Build Status"></a>
+<a href="http://hackage.haskell.org/package/bank-holiday-usa"><img src="https://img.shields.io/hackage/v/bank-holiday-usa.svg" alt="Hackage"></a></p>
+
+<p>A haskell library for holidays</p>
+
+<p><a href="https://hackage.haskell.org/package/bank-holiday-usa">bank-holiday-usa on hackage</a></p>
+
+<hr>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>usage</h2>
+
+<div class="highlight highlight-source-haskell"><pre><span class="pl-c">-- list the 2016 bank holidays</span>
+bankHolidays <span class="pl-c1">2016</span>
+[<span class="pl-c1">2016</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">18</span>,<span class="pl-c1">2016</span><span class="pl-k">-</span><span class="pl-c1">02</span><span class="pl-k">-</span><span class="pl-c1">15</span>,<span class="pl-c1">2016</span><span class="pl-k">-</span><span class="pl-c1">05</span><span class="pl-k">-</span><span class="pl-c1">30</span>,<span class="pl-c1">2016</span><span class="pl-k">-</span><span class="pl-c1">09</span><span class="pl-k">-</span><span class="pl-c1">05</span>,<span class="pl-c1">2016</span><span class="pl-k">-</span><span class="pl-c1">10</span><span class="pl-k">-</span><span class="pl-c1">10</span>,<span class="pl-c1">2016</span><span class="pl-k">-</span><span class="pl-c1">11</span><span class="pl-k">-</span><span class="pl-c1">24</span>,<span class="pl-c1">2016</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">01</span>,<span class="pl-c1">2016</span><span class="pl-k">-</span><span class="pl-c1">07</span><span class="pl-k">-</span><span class="pl-c1">04</span>,<span class="pl-c1">2016</span><span class="pl-k">-</span><span class="pl-c1">11</span><span class="pl-k">-</span><span class="pl-c1">11</span>,<span class="pl-c1">2016</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">26</span>]
+
+<span class="pl-c">-- isBankHoliday :: Day -&gt; Bool</span>
+<span class="pl-c1">filter</span> isBankHoliday [fromGregorian <span class="pl-c1">2012</span> <span class="pl-c1">2</span> <span class="pl-c1">2</span>, fromGregorian <span class="pl-c1">2016</span> <span class="pl-c1">1</span> <span class="pl-c1">1</span>]
+[<span class="pl-c1">2016</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">01</span>]
+
+<span class="pl-c">-- United States bank holidays started in 1933 on march 9th</span>
+holidaysBetweenYears <span class="pl-c1">1900</span> <span class="pl-c1">1933</span>
+[<span class="pl-c1">1933</span><span class="pl-k">-</span><span class="pl-c1">05</span><span class="pl-k">-</span><span class="pl-c1">29</span>,<span class="pl-c1">1933</span><span class="pl-k">-</span><span class="pl-c1">09</span><span class="pl-k">-</span><span class="pl-c1">04</span>,<span class="pl-c1">1933</span><span class="pl-k">-</span><span class="pl-c1">10</span><span class="pl-k">-</span><span class="pl-c1">09</span>,<span class="pl-c1">1933</span><span class="pl-k">-</span><span class="pl-c1">11</span><span class="pl-k">-</span><span class="pl-c1">23</span>,<span class="pl-c1">1933</span><span class="pl-k">-</span><span class="pl-c1">07</span><span class="pl-k">-</span><span class="pl-c1">04</span>,<span class="pl-c1">1933</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">25</span>]
+
+<span class="pl-en">holidaysBetweenYears</span> :: <span class="pl-k">Day</span> <span class="pl-k">-&gt;</span> <span class="pl-k">Day</span> <span class="pl-k">-&gt;</span> [<span class="pl-k">Day</span>]</pre></div>
+
+<div class="highlight highlight-source-shell"><pre>
+<span class="pl-c"># Configure &amp; build the package.</span>
+stack build
+
+<span class="pl-c"># Test package.</span>
+stack <span class="pl-c1">test</span>
+</pre></div>
+
+<h2>
+<a id="holidays" class="anchor" href="#holidays" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Holidays</h2>
+
+<p>The holiday's covered:</p>
+
+<ul>
+<li>New Year's Day - January 1</li>
+<li>Martin Luther King, Jr. Day - Third Monday in January</li>
+<li>George Washington's Birthday (President's day) - Third Monday in February</li>
+<li>Memorial Day - Last Monday in May</li>
+<li>Independence Day - July 4</li>
+<li>Labor Day - First Monday in September</li>
+<li>Columbus Day - Second Monday in October</li>
+<li>Veterans Day - November 11</li>
+<li>Thanksgiving Day - 4th Thursday in November</li>
+<li>Christmas Day - December 25</li>
+</ul>
+
+<blockquote>
+<p>For holidays falling on Saturday, Federal Reserve Banks and Branches will be
+  open the preceding Friday. For holidays falling on Sunday, all Federal
+  Reserve Banks and Branches will be closed the following Monday.</p>
+</blockquote>
+
+<p>Inspired by <a href="https://hackage.haskell.org/package/bank-holidays-england">this</a> library</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/tippenein">tippenein</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
