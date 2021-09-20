@@ -13,7 +13,7 @@ module Data.Time.Calendar.BankHoliday.UnitedStates
 
 import Data.Maybe
 import Data.Time (Day, fromGregorian)
-import Data.Time.Calendar (addDays, toModifiedJulianDay)
+import Data.Time.Calendar (DayOfWeek (..), addDays, toModifiedJulianDay, dayOfWeek)
 import Data.Time.Calendar.BankHoliday (yearFromDay)
 
 {- | bank holidays for a given year -}
@@ -28,7 +28,7 @@ bankHolidays year = filterHistoric standardHolidays
       , weekBefore (firstMondayIn jun)     -- memorial day
       , firstMondayIn sep                  -- labor day
       , weekAfter (firstMondayIn oct)      -- columbusDay
-      , 2 `weeksAfter` firstThursdayIn nov -- thanksgiving
+      , 3 `weeksAfter` firstThursdayIn nov -- thanksgiving
       ] ++ catMaybes [
         weekendHolidayFrom (jan 1)  -- newYearsDay
       , weekendHolidayFrom (jul 4)  -- independenceDay
@@ -66,9 +66,14 @@ weekendHolidayFrom d = case weekIndex d of
 
 -- | relative day helper functions
 weekIndex day = toModifiedJulianDay day `mod` 7
-firstMondayIn month = addDays (negate $ weekIndex (month 02)) (month 07)
-firstThursdayIn month = addDays 3 (firstMondayIn month)
+firstMondayIn month = firstDayOfWeekOnAfter Monday (month 01)
+firstThursdayIn month = firstDayOfWeekOnAfter Thursday (month 01)
 weeksBefore n = addDays (n * (-7))
 weekBefore = weeksBefore 1
 weeksAfter n = addDays (n * 7)
 weekAfter = weeksAfter 1
+
+firstDayOfWeekOnAfter :: DayOfWeek -> Day -> Day
+firstDayOfWeekOnAfter dw d = if dayOfWeek d == dw 
+    then d 
+    else firstDayOfWeekOnAfter dw  (addDays 1 d)

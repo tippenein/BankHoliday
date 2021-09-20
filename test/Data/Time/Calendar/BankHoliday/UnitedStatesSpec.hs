@@ -75,3 +75,14 @@ spec = do
       theRange `shouldContain` [e]
       theRange `shouldContain` [fromGregorian 2014 1 20]
 
+  describe "holidays depended on weekdays" $ do
+    it "2021" $ do
+      bankHolidays 2021 `shouldContain` [fromGregorian 2021 2 15] -- president day
+      bankHolidays 2021 `shouldContain` [fromGregorian 2021 11 25] -- thanksgiving day
+    it "2022" $ do
+      bankHolidays 2022 `shouldContain` [fromGregorian 2022 2 21] -- president day
+      bankHolidays 2022 `shouldContain` [fromGregorian 2022 11 24] -- thanksgiving day
+    it "2023" $ do
+      bankHolidays 2023 `shouldContain` [fromGregorian 2023 2 20] -- president day
+      bankHolidays 2023 `shouldContain` [fromGregorian 2023 11 23] -- thanksgiving day
+      
