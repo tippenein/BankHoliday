@@ -1,5 +1,5 @@
 name: bank-holiday-usa
-version: 0.1.1
+version: 0.2.0
 cabal-version: >=1.10
 build-type: Simple
 license: MIT
@@ -8,7 +8,7 @@ homepage: https://github.com/tippenein/BankHoliday
 bug-reports: https://github.com/tippenein/BankHoliday/issues
 copyright: 2015 brady.ouren <brady.ouren@gmail.com>
 maintainer: brady.ouren <brady.ouren@gmail.com>
-synopsis: A library for determining US bank holidays
+synopsis: US bank holidays
 description:
     A library for determining US bank holidays
 category: Time
